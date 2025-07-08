@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const axios = require('axios');
 require('dotenv').config();
+console.log("🔐 GROQ_API_KEY =", process.env.GROQ_API_KEY ? 'ĐÃ TÌM THẤY' : 'CHƯA CÓ!');
 
 const app = express();
 app.use(cors());
