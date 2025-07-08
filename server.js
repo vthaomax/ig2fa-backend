@@ -21,7 +21,7 @@ app.post('/chat', async (req, res) => {
         const response = await axios.post(
             OPENROUTER_URL,
             {
-                model: 'openchat/openchat-3.5-1210',
+                model: 'openai/gpt-3.5-turbo',
                 messages: [
                     { role: 'system', content: 'Bạn là AI bảo mật IG2FA, dí dỏm, hacker style, bí ẩn.' },
                     { role: 'user', content: userMessage }
