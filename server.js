@@ -8,37 +8,40 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions';
+const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 
 app.get('/', (req, res) => {
-    res.send('✅ IG2FA backend (OpenRouter) is running!');
+    res.send('✅ IG2FA backend (Groq) is running!');
 });
 
 app.post('/chat', async (req, res) => {
     const userMessage = req.body.message;
     console.log('📥 Nhận message:', userMessage);
+
     try {
         const response = await axios.post(
-            OPENROUTER_URL,
+            GROQ_API_URL,
             {
-                model: 'openai/gpt-3.5-turbo',
+                model: 'mixtral-8x7b-32768',
                 messages: [
                     { role: 'system', content: 'Bạn là AI bảo mật IG2FA, dí dỏm, hacker style, bí ẩn.' },
                     { role: 'user', content: userMessage }
-                ]
+                ],
+                temperature: 0.9
             },
             {
                 headers: {
-                    'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
+                    'Authorization': `Bearer ${process.env.GROQ_API_KEY}`,
                     'Content-Type': 'application/json'
                 }
             }
         );
+
         const reply = response.data.choices[0].message.content;
         console.log('📤 AI trả lời:', reply);
         res.json({ reply });
     } catch (err) {
-        console.error('❌ Lỗi khi gọi OpenRouter:', err.response ? err.response.data : err.message);
+        console.error('❌ Lỗi khi gọi Groq API:', err.response ? err.response.data : err.message);
         res.status(500).json({ reply: '⚠️ Lỗi server. Hãy thử lại sau!' });
     }
 });
