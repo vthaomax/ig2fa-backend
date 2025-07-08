@@ -22,7 +22,7 @@ app.post('/chat', async (req, res) => {
         const response = await axios.post(
             GROQ_API_URL,
             {
-                model: 'mixtral-8x7b-32768',
+                model: 'meta-llama/llama-4-scout-17b-16e-instruct',
                 messages: [
                     { role: 'system', content: 'Bạn là AI bảo mật IG2FA, dí dỏm, hacker style, bí ẩn.' },
                     { role: 'user', content: userMessage }
